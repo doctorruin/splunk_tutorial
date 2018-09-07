@@ -136,9 +136,12 @@ styles in <div> tags, similar to Bootstrap's grid system.
 				<div>
 					<p class="description">
 					Use indexed and default fields whenever you can to help search or filter your data efficiently. At index time, Splunk software extracts a set of default fields that are common to each event. These fields include host, source, and sourcetype. Use these fields to filter your data as early as possible in the search so that processing is done on a minimum amount of data.
+					</p>
 
-					For example, if you're building a report on web access errors, search for those specific errors before the reporting command:
-
+					<p class="description">For example, if you're building a report on web access errors, search for those specific errors before the reporting command:
+					</p>
+					
+					<p class="description">
 						index=web sourcetype=access_* (status=4* OR status=5*) | stats count by status
 					</p>
 				</div>
