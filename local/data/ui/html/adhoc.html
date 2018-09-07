@@ -93,32 +93,56 @@ styles in <div> tags, similar to Bootstrap's grid system.
         <p class="description">For reference: <a href="http://docs.splunk.com/Documentation/Splunk/7.1.2/Search/Aboutsearchlanguagesyntax">Splunk Doc Anatomy of a Search</a></p>
     </div>
     <div id="accordionpanel" class="dashboard-row" style="margin-bottom:20px;">
-      <div id="accordion" >
-  	  <h3 class="accheader">Introduction</h3>
-  	  <div><p class="description">The "search pipeline" refers to the structure of a Splunk search, in which consecutive commands are chained together using a pipe character, "|". The pipe character tells Splunk software to use the output or result of one command (to the left of the pipe) as the input for the next command (to the right of the pipe). This enables you to refine or enhance the data at each step along the pipeline until you get the results that you want.</p>
+		<div id="accordion" >
+			<h3 class="accheader">Introduction</h3>
+				<div>
+					<p class="description">The "search pipeline" refers to the structure of a Splunk search, in which consecutive commands are chained together using a pipe character, "|". The pipe character tells Splunk software to use the output or result of one command (to the left of the pipe) as the input for the next command (to the right of the pipe). This enables you to refine or enhance the data at each step along the pipeline until you get the results that you want.</p>
 
- <p class="description">A Splunk search starts with search terms at the beginning of the pipeline. These search terms are keywords, phrases, boolean expressions, key/value pairs, etc. that specify which events you want to retrieve from the index(es).</p>
+					<p class="description">A Splunk search starts with search terms at the beginning of the pipeline. These search terms are keywords, phrases, boolean expressions, key/value pairs, etc. that specify which events you want to retrieve from the index(es).</p>
 
- <p class="description">The retrieved events can then be passed as inputs into a search command using a pipe character. Search commands tell Splunk software what to do to the events after you retrieved them from the index(es). For example, you might use commands to filter unwanted information, extract more information, evaluate new fields, calculate statistics, reorder your results, or create a chart. Some commands have functions and arguments associated with them. These functions and their arguments enable you to specify how the commands act on your results and which fields to act on; for example, how to create a chart, what kind of statistics to calculate, and what fields to evaluate. Some commands also enable you to use clauses to specify how you want to group your search results.</p>
-</div>
+					<p class="description">The retrieved events can then be passed as inputs into a search command using a pipe character. Search commands tell Splunk software what to do to the events after you retrieved them from the index(es). For example, you might use commands to filter unwanted information, extract more information, evaluate new fields, calculate statistics, reorder your results, or create a chart. Some commands have functions and arguments associated with them. These functions and their arguments enable you to specify how the commands act on your results and which fields to act on; for example, how to create a chart, what kind of statistics to calculate, and what fields to evaluate. Some commands also enable you to use clauses to specify how you want to group your search results.</p>
+				</div>
 
- <h3 class="accheader">Optimization Principles</h3>
- <div>
-
- <p class="description"></p>
-
- </div>
-	  <h3 class="accheader">Example</h3>
-        <div>
-
-		<p class="description">A good search should always include a specific index
-
-	</div>
+			<h3 class="accheader">Optimization Principles</h3>
+				<div>
+					<p class="description">
+					The key to fast searching is to limit the data that needs to be pulled from disk to an absolute minimum. Filter the data as early as possible in the search, so that processing is done on the minimum amount of data necessary.
+					</p>
+					<p class="description">
+					<ul>
+						<li>Limit the data from disk
+							<ul>
+								<li>Narrow the time window</li>
+								<li>Specify the index, source, or source type</li>
+								<li>Be specific</li>
+								<li>Limit the number of events retrieved</li>
+								<li>Avoid using NOT expressions</li>
+							</ul>
+						</li>
+						<li>Filter as soon as possible</li>
+							<ul>
+								<li>Use field-value pairs before the first pipe</li>
+								<li>Use filtering commands before calculating commands</li>
+								<li>Filter unnecessary fields from search results</li>
+								<li>Use non-streaming commands as late as possible</li>
+							</ul>
+						</li>
+					</ul>
+					</p>
+				</div>
+			<h3 class="accheader">Example</h3>
+				<div>
+					<p class="description">A good search should always include a specific index</p>
+				</div>
      
-	  <h3 class="accheader">Practice</h3>
-	<div>Practice</div>
-</div>
-</div>
+			<h3 class="accheader">Practice</h3>
+				<div>
+					<p class="description">Practice</p>
+				</div>
+		</div>
+	</div>
+	<!-- End of Accordion code -->
+	
 	<div class="fieldset">
         <div class="input input-text" id="input1">
             <label>Search</label>
