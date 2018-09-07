@@ -1,0 +1,72 @@
+<form>
+  <label>Perform Ad Hoc Searches</label>
+  <description>Learn how to perform a search optimally using this guide.</description>
+  <init>
+    <unset token="GENERATOR_SID"></unset>
+  </init>
+  <fieldset submitButton="true">
+    <input type="text" token="searchstring" searchWhenChanged="false">
+      <label>Search</label>
+      <default>*</default>
+    </input>
+    <input type="time" token="time_token" searchWhenChanged="true">
+      <label>Time Picker</label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel depends="$GENERATOR_SID$">
+      <table>
+        <title>Metrics on Your Search</title>
+        <search>
+          <query>| rest /services/search/jobs/$GENERATOR_SID$ splunk_server=local summarize=false | eval runDuration=(runDuration + "s") | fields + runDuration, resultCount, optimizedSearch | rename resultCount as "Results Count", runDuration as "Time Taken", optimizedSearch as "Splunk Optimized Search Recommendation"</query>
+          <earliest>-1m</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Fields from Search</title>
+      <table>
+        <title>Search using fields to improve search performance. Example: status=200</title>
+        <search>
+          <query>$searchstring$ | fieldsummary | fields field</query>
+          <earliest>$time_token.earliest$</earliest>
+          <latest>$time_token.latest$</latest>
+        </search>
+        <option name="count">20</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Events From Search</title>
+      <event>
+        <search>
+          <done>
+            <set token="GENERATOR_SID">"$job.sid$"</set>
+          </done>
+          <query>$searchstring$</query>
+          <earliest>$time_token.earliest$</earliest>
+          <latest>$time_token.latest$</latest>
+        </search>
+        <option name="count">5</option>
+        <option name="list.drilldown">none</option>
+        <option name="raw.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">0</option>
+        <option name="table.drilldown">none</option>
+        <option name="type">list</option>
+      </event>
+    </panel>
+  </row>
+</form>

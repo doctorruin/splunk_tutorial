@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Music</title>
+    <link rel="shortcut icon" href="/en-US/static/@F1928397F799CDCD433E9D14348DB1FCAE5D9979DF4E0095E611EBA7075A478D/img/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="{{SPLUNKWEB_URL_PREFIX}}/static/build/css/bootstrap-enterprise.css" />
+    <link rel="stylesheet" type="text/css" href="{{SPLUNKWEB_URL_PREFIX}}/static/build/css/splunkjs-dashboard.css" />
+
+
+        <meta name="referrer" content="never" />
+        <meta name="referrer" content="no-referrer" />
+    
+          <script>
+                window._splunk_metrics_events = {
+                   push : function() {},
+                   active: false,
+                   }
+          </script>
+    <link rel="stylesheet"  type="text/css" href="{{SPLUNKWEB_URL_PREFIX}}/static/app/nnsa_iarc_splunk_tutorial/jquery-ui.css" />
+    <style>
+        #accordionpanel { 
+            background-color: inherit;
+        }
+	  #chart {
+          height: 500px;
+        }
+        .node rect {
+          cursor: move;
+          fill-opacity: .9;
+          shape-rendering: crispEdges;
+        }
+        .node text {
+          pointer-events: none;
+          text-shadow: 0 1px 0 #fff;
+        }
+        .link {
+          fill: none;
+          stroke: #000;
+          stroke-opacity: .2;
+        }
+        .link:hover {
+          stroke-opacity: .5;
+        }
+	  .link.my-selected {
+            stroke: yellow;
+        }
+        .scrollable {
+            overflow-y: auto;
+        }
+    </style>
+  
+    </head>
+<body class="simplexml preload locale-en" data-splunk-version="7.1.0" data-splunk-product="enterprise">
+<!--
+BEGIN LAYOUT
+This section contains the layout for the dashboard. Splunk uses proprietary
+styles in <div> tags, similar to Bootstrap's grid system.
+-->
+<header>
+    <a aria-label="Screen reader users, click here to skip the navigation bar" class="navSkip" href="#navSkip" tabIndex="1">Skip Navigation &gt;</a>
+    <div class="header splunk-header">
+            <div id="placeholder-splunk-bar">
+                <a href="{{SPLUNKWEB_URL_PREFIX}}/app/launcher/home" class="brand" title="splunk &gt; listen to your data">splunk<strong>&gt;</strong></a>
+            </div>
+                <div id="placeholder-app-bar"></div>
+    </div>
+    <a id="navSkip"></a>
+</header>
+<div class="dashboard-body container-fluid main-section-body" data-role="main">
+    <div class="dashboard-header clearfix">
+        <h2>Music</h2>
+    </div>
+
+
+     <!-- First row -->
+    <div class="dashboard-row">
+
+        <!-- Moved up -->
+        <div class="dashboard-cell">
+
+            <div class="dashboard-panel">
+                <div class="panel-element-row">
+                    <div class="dashboard-element chart">
+                        <div class="panel-head">
+                            <h3>Top Artist Downloads</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div id="element3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="accordionpanel" class="dashboard-cell">
+            <!-- Accordion widget -->
+            <div id="accordion" class="dashboard-panel">
+                <h3>Top Artist Searches</h3>
+                <div class="panel-element-row">
+                    <div class="dashboard-element chart">
+                        <div class="panel-body">
+                            <div id="element1"></div>
+                        </div>
+                    </div>
+                </div>
+                <h3>Top Song Downloads</h3>
+                <div class="panel-element-row">
+                    <div class="dashboard-element table">
+                        <div class="panel-body">
+                            <div id="element2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- End first row -->
+     <!-- Second row -->
+    <div class="dashboard-row">
+        <div class="dashboard-cell" style="width: 100%;">
+           <div class="dashboard-panel">
+                <div class="panel-element-row">
+                    <div class="dashboard-element">
+                        <div class="panel-head">
+                            <h3>Artists Downloaded to Devices</h3>
+                        </div>
+                        <div class="panel-body">
+                            <!-- Sankey Chart -->
+                            <p id="chart"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End second row -->
+      <!-- Third row -->
+    <div class="dashboard-row">
+        <div class="dashboard-cell" style="width: 100%;">
+            <div class="dashboard-panel scrollable">
+                <div class="panel-element-row">
+                    <div class="dashboard-element table">
+                        <div class="panel-head">
+                            <h3>Results for Artists Downloaded to Devices</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div id="interactiveviewer"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End third row -->
+</div>
+
+<!--
+END LAYOUT
+-->
+
+<script src="{{SPLUNKWEB_URL_PREFIX}}/config?autoload=1" crossorigin="use-credentials"></script>
+<script src="{{SPLUNKWEB_URL_PREFIX}}/static/js/i18n.js"></script>
+<script src="{{SPLUNKWEB_URL_PREFIX}}/i18ncatalog?autoload=1"></script>
+<script src="{{SPLUNKWEB_URL_PREFIX}}/static/build/simplexml/index.js"></script>
+<script type="text/javascript">
+  
+  require.config({
+    baseUrl: "{{SPLUNKWEB_URL_PREFIX}}/static/js",
+    waitSeconds: 0, // Disable require.js load timeout
+    //For this tutorial, download third-party libraries over the internet.
+    // In practice, it is recommended that you bundle dependencies with your app.
+    paths: {
+        'jquery-ui': '{{SPLUNKWEB_URL_PREFIX}}/static/app/nnsa_iarc_splunk_tutorial/jquery-ui.min',
+        'd3': 'http://d3js.org/d3.v2.min',
+        'sankey': '{{SPLUNKWEB_URL_PREFIX}}/static/app/nnsa_iarc_splunk_tutorial/sankey',
+        'sankey-helper': '{{SPLUNKWEB_URL_PREFIX}}/static/app/nnsa_iarc_splunk_tutorial/sankey-helper'
+    },
+    shim: {
+        'jquery-ui': {
+            deps: ['jquery']
+        },
+        'sankey': {
+            deps: ['d3']
+        },
+        'sankey-helper': {
+            deps: ['sankey']
+        }
+    }
+  });
+// <![CDATA[
+// <![CDATA[
+//
+// LIBRARY REQUIREMENTS
+//
+// In the require function, we include the necessary libraries and modules for
+// the HTML dashboard. Then, we pass variable names for these libraries and
+// modules as function parameters, in order.
+//
+// When you add libraries or modules, remember to retain this mapping order
+// between the library or module and its function parameter. You can do this by
+// adding to the end of these lists, as shown in the commented examples below.
+
+// 
+// ACCORDION
+// 
+  require(['jquery-ui', 'splunkjs/mvc/simplexml/ready!'], function() {
+      $('#accordion .panel-title').remove();
+      $('#accordion .fieldset').remove();
+      $('#accordion').accordion({
+          heightStyle: "content"
+      });
+   });
+
+
+require([
+    "splunkjs/mvc",
+    "splunkjs/mvc/utils",
+    "splunkjs/mvc/tokenutils",
+    "underscore",
+    "jquery",
+    "splunkjs/mvc/simplexml",
+    "splunkjs/mvc/layoutview",
+    "splunkjs/mvc/simplexml/dashboardview",
+    "splunkjs/mvc/simplexml/dashboard/panelref",
+    "splunkjs/mvc/simplexml/element/chart",
+    "splunkjs/mvc/simplexml/element/event",
+    "splunkjs/mvc/simplexml/element/html",
+    "splunkjs/mvc/simplexml/element/list",
+    "splunkjs/mvc/simplexml/element/map",
+    "splunkjs/mvc/simplexml/element/single",
+    "splunkjs/mvc/simplexml/element/table",
+    "splunkjs/mvc/simplexml/element/visualization",
+    "splunkjs/mvc/simpleform/formutils",
+    "splunkjs/mvc/simplexml/eventhandler",
+    "splunkjs/mvc/simplexml/searcheventhandler",
+    "splunkjs/mvc/simpleform/input/dropdown",
+    "splunkjs/mvc/simpleform/input/radiogroup",
+    "splunkjs/mvc/simpleform/input/linklist",
+    "splunkjs/mvc/simpleform/input/multiselect",
+    "splunkjs/mvc/simpleform/input/checkboxgroup",
+    "splunkjs/mvc/simpleform/input/text",
+    "splunkjs/mvc/simpleform/input/timerange",
+    "splunkjs/mvc/simpleform/input/submit",
+    "splunkjs/mvc/searchmanager",
+    "splunkjs/mvc/savedsearchmanager",
+    "splunkjs/mvc/postprocessmanager",
+    "splunkjs/mvc/simplexml/urltokenmodel",
+    "jquery-ui",
+    "sankey-helper"
+    ],
+    function(
+        mvc,
+        utils,
+        TokenUtils,
+        _,
+        $,
+        DashboardController,
+        LayoutView,
+        Dashboard,
+        PanelRef,
+        ChartElement,
+        EventElement,
+        HtmlElement,
+        ListElement,
+        MapElement,
+        SingleElement,
+        TableElement,
+        VisualizationElement,
+        FormUtils,
+        EventHandler,
+        SearchEventHandler,
+        DropdownInput,
+        RadioGroupInput,
+        LinkListInput,
+        MultiSelectInput,
+        CheckboxGroupInput,
+        TextInput,
+        TimeRangeInput,
+        SubmitButton,
+        SearchManager,
+        SavedSearchManager,
+        PostProcessManager,
+        UrlTokenModel
+
+        // Add comma-separated parameter names here, for example:
+        // ...UrlTokenModel,
+        // TokenForwarder
+        ) {
+
+        var pageLoading = true;
+
+
+        //
+        // TOKENS
+        //
+
+        // Create token namespaces
+        var urlTokenModel = new UrlTokenModel();
+        mvc.Components.registerInstance('url', urlTokenModel);
+        var defaultTokenModel = mvc.Components.getInstance('default', {create: true});
+        var submittedTokenModel = mvc.Components.getInstance('submitted', {create: true});
+
+        urlTokenModel.on('url:navigate', function() {
+            defaultTokenModel.set(urlTokenModel.toJSON());
+            if (!_.isEmpty(urlTokenModel.toJSON()) && !_.all(urlTokenModel.toJSON(), _.isUndefined)) {
+                submitTokens();
+            } else {
+                submittedTokenModel.clear();
+            }
+        });
+
+        // Initialize tokens
+        defaultTokenModel.set(urlTokenModel.toJSON());
+
+        function submitTokens() {
+            // Copy the contents of the defaultTokenModel to the submittedTokenModel and urlTokenModel
+            FormUtils.submitForm({ replaceState: pageLoading });
+        }
+
+        function setToken(name, value) {
+            defaultTokenModel.set(name, value);
+            submittedTokenModel.set(name, value);
+        }
+
+        function unsetToken(name) {
+            defaultTokenModel.unset(name);
+            submittedTokenModel.unset(name);
+        }
+
+
+
+        //
+        // SEARCH MANAGERS
+        //
+        
+var search1 = new SearchManager({
+            "id": "search1",
+            "latest_time": "now",
+            "cancelOnUnload": true,
+            "search": "| inputlookup musicdata.csv | search bc_uri=/browse/search/* | top search_terms | fields - percent | rex field=search_terms mode=sed \"s/\\+/ /g\"",
+            "earliest_time": "-24h@h",
+            "status_buckets": 0,
+            "sample_ratio": null,
+            "app": utils.getCurrentApp(),
+            "auto_cancel": 90,
+            "preview": true,
+            "tokenDependencies": {
+            },
+            "runWhenTimeIsUndefined": false
+        }, {tokens: true, tokenNamespace: "submitted"});
+        
+var search2 = new SearchManager({
+            "id": "search2",
+            "latest_time": "now",
+            "cancelOnUnload": true,
+            "search": "| inputlookup musicdata.csv | search bc_uri=/sync/addtolibrary* | stats count by track_name | sort count desc | table track_name count",
+            "earliest_time": "-24h@h",
+            "status_buckets": 0,
+            "sample_ratio": null,
+            "app": utils.getCurrentApp(),
+            "auto_cancel": 90,
+            "preview": true,
+            "tokenDependencies": {
+            },
+            "runWhenTimeIsUndefined": false
+        }, {tokens: true, tokenNamespace: "submitted"});
+        
+var search3 = new SearchManager({
+            "id": "search3",
+            "latest_time": "$latest$",
+            "cancelOnUnload": true,
+            "search": "| inputlookup musicdata.csv | search bc_uri=/sync/addtolibrary* | timechart useother=f usenull=f span=20s count by artist_name",
+            "earliest_time": "$earliest$",
+            "status_buckets": 0,
+            "sample_ratio": null,
+            "app": utils.getCurrentApp(),
+            "auto_cancel": 90,
+            "preview": true,
+            "tokenDependencies": {
+            },
+            "runWhenTimeIsUndefined": false
+        }, {tokens: true, tokenNamespace: "submitted"});
+
+// Artist Downloads per Mobile Device search
+        var sankeysearch = new SearchManager({
+            "id": "sankeysearch",
+            "earliest_time": "0",
+            "latest_time": "$latest$",
+            "cancelOnUnload": true,
+            "status_buckets": 0,
+            "search": '| inputlookup musicdata.csv | stats count by artist_name, eventtype | where (eventtype="ua-mobile-android" OR eventtype="ua-mobile-ipod" OR eventtype="ua-mobile-blackberry" OR eventtype="ua-mobile-iphone" OR eventtype="ua-mobile-ipad")', 
+            "app": utils.getCurrentApp(),
+            "auto_cancel": 90,
+            "preview": true,
+            "runWhenTimeIsUndefined": false
+        }, {tokens: true, tokenNamespace: "submitted"});
+// Interactive search
+        var interactivesearch = new SearchManager({
+            "id": "interactivesearch",
+            "cancelOnUnload": true,
+            "status_buckets": 0,
+            "search": mvc.tokenSafe("| inputlookup musicdata.csv | search artist_name=$artist_name$ eventtype=$eventtype$"),
+            "app": utils.getCurrentApp(),
+            "auto_cancel": 90,
+            "preview": true,
+        });
+
+        //
+        // SPLUNK LAYOUT
+        //
+
+        $('header').remove();
+        new LayoutView({"hideChrome": false, "hideAppBar": false, "hideSplunkBar": false})
+            .render()
+            .getContainerElement()
+            .appendChild($('.dashboard-body')[0]);
+
+        //
+        // DASHBOARD EDITOR
+        //
+
+        new Dashboard({
+            id: 'dashboard',
+            el: $('.dashboard-body'),
+            showTitle: true,
+            editable: true
+        }, {tokens: true}).render();
+
+
+        //
+        // VIEWS: VISUALIZATION ELEMENTS
+        //
+
+        var element1 = new ChartElement({
+            "id": "element1",
+            "charting.chart": "bar",
+            "charting.drilldown": "none",
+            "resizable": true,
+            "managerid": "search1",
+            "el": $('#element1')
+        }, {tokens: true, tokenNamespace: "submitted"}).render();
+
+
+        var element2 = new TableElement({
+            "id": "element2",
+            "drilldown": "none",
+            "managerid": "search2",
+            "el": $('#element2')
+        }, {tokens: true, tokenNamespace: "submitted"}).render();
+
+        var element3 = new ChartElement({
+            "id": "element3",
+            "charting.chart": "column",
+            "charting.drilldown": "none",
+            "resizable": true,
+	    "charting.chart.nullValueMode": "zero",
+            "charting.chart.stackMode": "stacked100",
+            "managerid": "search3",
+            "el": $('#element3')
+        }, {tokens: true, tokenNamespace: "submitted"}).render();
+	 
+	// Table to display interactive data
+        var interactiveviewer = new TableElement({
+            "id": "interactiveviewer",
+            "drilldown": "none",
+            "managerid": "interactivesearch",
+            "el": $("#interactiveviewer")
+        }, {tokens: true}).render();
+        
+         //
+        // SANKEY CODE
+        //
+        var sankeyHelper = window.MusicDashboard.SankeyHelper;
+        var setup = sankeyHelper.setupSankey();
+        var data = sankeysearch.data("results", {
+            output_mode: "json_rows",
+            count: 0 // get all results
+        });
+        var formatResults = function(results) {
+            if (!data.hasData()) {
+                return;
+            }
+            // Format Splunk data for Sankey
+            var collection = results.collection().toJSON();
+            var nodesList = _.uniq(_.pluck(collection, "artist_name").concat(_.pluck(collection, "eventtype")));
+            var links = _.map(collection, function(item) {
+                return {
+                    source: nodesList.indexOf(item.artist_name),
+                    target: nodesList.indexOf(item.eventtype),
+                    value: parseInt(item.count)
+                }
+            });
+            var nodes = _.map(nodesList, function(node) { return { name: node } });
+            // Put data into Sankey diagram
+            sankeyHelper.renderSankey(nodes, links, setup.svg, setup.sankey, setup.path);
+        };
+
+	 // Interactivity
+            var tokens = mvc.Components.get("default");
+            sankeyHelper.getLink().on("click", function(clickedLink) {
+                // Highlight the link that was clicked
+                sankeyHelper.getLink().classed("my-selected", false);
+                d3.select(this).classed("my-selected", true);
+
+                // Update the tokens on the search manager
+                tokens.set("artist_name", '\"' + clickedLink.source.name + '\"');
+                tokens.set("eventtype", clickedLink.target.name);
+            });
+
+        data.on("data", formatResults);
+
+
+        // Initialize time tokens to default
+        if (!defaultTokenModel.has('earliest') && !defaultTokenModel.has('latest')) {
+            defaultTokenModel.set({ earliest: '0', latest: '' });
+        }
+
+        submitTokens();
+
+
+        //
+        // DASHBOARD READY
+        //
+
+        DashboardController.ready();
+        pageLoading = false;
+
+    }
+);
+// ]]>
+</script>
+</body>
+</html>
