@@ -1,0 +1,64 @@
+		#accordionpanel {
+            background-color: inherit;
+        }
+        
+		#chart {
+          height: 500px;
+        }
+		
+		.accheader{
+          background: #5cc05c;
+          font-family: Splunk Platform Sans,Proxima Nova,Roboto,Droid,Helvetica Neue,Helvetica,Arial,sans-serif;
+          color: #fff;
+          font-size: 16px;
+		}
+		
+		.searchbox{
+		 border-radius: 5px;
+		 padding: 5px;
+		 background: #00a4fd;
+		 width: 654px;
+		 box-shadow: 1px 1px #888888;
+		 color: #fff;
+		}
+	
+		.splunkstyle{
+		  margin: 0;
+	      background: #f2f4f5;
+    	  color: #3c444d;
+    	  min-width: 960px;
+    	  font-family: Splunk Platform Sans,Proxima Nova,Roboto,Droid,Helvetica Neue,Helvetica,Arial,sans-serif;
+    	  font-size: 14px;
+    	  font-weight: 400;
+    	  line-height: 20px;
+    	  transition: margin .2s;
+		}
+        
+		.node rect {
+          cursor: move;
+          fill-opacity: .9;
+          shape-rendering: crispEdges;
+        }
+        
+		.node text {
+          pointer-events: none;
+          text-shadow: 0 1px 0 #fff;
+        }
+        
+		.link {
+          fill: none;
+          stroke: #000;
+          stroke-opacity: .2;
+        }
+        
+		.link:hover {
+          stroke-opacity: .5;
+        }
+        
+		.link.my-selected {
+            stroke: yellow;
+        }
+        
+		.scrollable {
+            overflow-y: auto;
+        }
