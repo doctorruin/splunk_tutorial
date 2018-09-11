@@ -57,18 +57,18 @@ styles in <div> tags, similar to Bootstrap's grid system.
 				
 					<p class="description pstyle">A search consists of a series of commands that are delimited by pipe ( | ) characters. The first whitespace-delimited string after each pipe character controls the command used. The remainder of the text for each command is handled in a manner specific to the given command. For example, the below search commands are: search* , top, and fields.
 					
-					<p class="description searchbox">
+					<div class="searchbox">
 					sourcetype=syslog ERROR | top user | fields - percent
-					</p>
+					</div>
 					</p>
 					
 					<p class="description pstyle">The "search pipeline" refers to the structure of a Splunk search, in which consecutive commands are chained together using a pipe character, "|". The pipe character tells Splunk software to use the output or result of one command (to the left of the pipe) as the input for the next command (to the right of the pipe). This enables you to refine or enhance the data at each step along the pipeline until you get the results that you want.
 					
-					<p class="description searchbox">
+					<div class="searchbox">
 					sourcetype=syslog ERROR ---> 100 events</br>
 					top user --> top 10<default> events</br>
 					fields - percent ---> Top 10 events without percent field</br>
-					</p>
+					</div>
 					</p>
 
 					<p class="description pstyle">A Splunk search starts with search terms at the beginning of the pipeline, this is called the <b>base search</b>. These search terms are keywords, phrases, boolean expressions, key/value pairs, etc. that specify which events you want to retrieve from the index(es).
