@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>adhoc</title>
+    <title>Anatomy of a Search</title>
     <link rel="shortcut icon" href="/en-US/static/@F1928397F799CDCD433E9D14348DB1FCAE5D9979DF4E0095E611EBA7075A478D.1/img/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="{{SPLUNKWEB_URL_PREFIX}}/static/build/css/bootstrap-enterprise.css" />
     <link rel="stylesheet" type="text/css" href="{{SPLUNKWEB_URL_PREFIX}}/static/build/css/splunkjs-dashboard.css" />
@@ -19,74 +19,10 @@
                    }
           </script>
 
-
+		  
+		<!-- CSS for jquery UI and APP -->
 	   <link rel="stylesheet"  type="text/css" href="{{SPLUNKWEB_URL_PREFIX}}/static/app/nnsa_iarc_splunk_tutorial/jquery-ui.css" />
-    <style>
-        #accordionpanel {
-            background-color: inherit;
-        }
-        
-		#chart {
-          height: 500px;
-        }
-		
-		.accheader{
-          background: #5cc05c;
-          font-family: Splunk Platform Sans,Proxima Nova,Roboto,Droid,Helvetica Neue,Helvetica,Arial,sans-serif;
-          color: #fff;
-          font-size: 16px;
-		}
-		
-		.searchbox{
-		 border-radius: 5px;
-		 padding: 5px;
-		 background: #00a4fd;
-		 width: 654px;
-		 box-shadow: 1px 1px #888888;
-		 color: #fff;
-		}
-	
-		.splunkstyle{
-		  margin: 0;
-	      background: #f2f4f5;
-    	  color: #3c444d;
-    	  min-width: 960px;
-    	  font-family: Splunk Platform Sans,Proxima Nova,Roboto,Droid,Helvetica Neue,Helvetica,Arial,sans-serif;
-    	  font-size: 14px;
-    	  font-weight: 400;
-    	  line-height: 20px;
-    	  transition: margin .2s;
-		}
-        
-		.node rect {
-          cursor: move;
-          fill-opacity: .9;
-          shape-rendering: crispEdges;
-        }
-        
-		.node text {
-          pointer-events: none;
-          text-shadow: 0 1px 0 #fff;
-        }
-        
-		.link {
-          fill: none;
-          stroke: #000;
-          stroke-opacity: .2;
-        }
-        
-		.link:hover {
-          stroke-opacity: .5;
-        }
-        
-		.link.my-selected {
-            stroke: yellow;
-        }
-        
-		.scrollable {
-            overflow-y: auto;
-        }
-    </style>
+	   <link rel="stylesheet"  type="text/css" href="{{SPLUNKWEB_URL_PREFIX}}/static/app/nnsa_iarc_splunk_tutorial/custom.css" />
 
     </head>
 <body class="simplexml preload locale-en" data-splunk-version="7.1.0" data-splunk-product="enterprise">
@@ -105,11 +41,15 @@ styles in <div> tags, similar to Bootstrap's grid system.
     </div>
     <a id="navSkip"></a>
 </header>
+
+
 <div class="dashboard-body container-fluid main-section-body" data-role="main">
     <div class="dashboard-header clearfix">
         <h2>Anatomy of a Search</h2>
-        <p class="description">For reference: <a href="http://docs.splunk.com/Documentation/Splunk/7.1.2/Search/Aboutsearchlanguagesyntax">Splunk Doc Anatomy of a Search</a></p>
+        <p class="description">Learn how to write optimal searches to return events.</a></p>
     </div>
+	
+	<!-- Begin Accordian Code -->
     <div id="accordionpanel" class="dashboard-row" style="margin-bottom:20px;">
 		<div id="accordion" >
 			<h3 class="accheader">Introduction</h3>
@@ -503,7 +443,7 @@ var search3 = new SearchManager({
             "id": "element1",
             "count": 10,
             "drilldown": "none",
-            "refresh.display": "progressbar",
+            "refresh.display": "none",
             "wrap": "true",
             "managerid": "search1",
             "el": $('#element1')
@@ -551,7 +491,7 @@ var search3 = new SearchManager({
         var input2 = new TimeRangeInput({
             "id": "input2",
             "default": {"latest_time": "now", "earliest_time": "-24h@h"},
-            "searchWhenChanged": true,
+            "searchWhenChanged": false,
             "earliest_time": "$form.time_token.earliest$",
             "latest_time": "$form.time_token.latest$",
             "el": $('#input2')
