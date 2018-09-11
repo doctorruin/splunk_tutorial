@@ -12,6 +12,10 @@
 		  padding-top: 2px;
 		}
 		
+		.dashboard-body-bg{
+			background: none
+		}
+		
 		.accheader{
           background: #5cc05c;
           font-family: Splunk Platform Sans,Proxima Nova,Roboto,Droid,Helvetica Neue,Helvetica,Arial,sans-serif;
@@ -20,12 +24,13 @@
 		}
 		
 		.searchbox{
-		 border-radius: 5px;
-		 padding: 5px;
-		 background: #00a4fd;
-		 width: 654px;
-		 box-shadow: 1px 1px #888888;
-		 color: #fff;
+		border-radius: 5px;
+		padding: 5px;
+		background: #00a4fd;
+		width: 654px;
+		box-shadow: 1px 1px #888888;
+		color: #fff;
+		margin: 10px 0px;
 		}
 	
 		.splunkstyle{
