@@ -61,7 +61,7 @@ styles in <div> tags, similar to Bootstrap's grid system.
 					<p class="description">The retrieved events can then be passed as inputs into a search command using a pipe character. Search commands tell Splunk software what to do to the events after you retrieved them from the index(es). For example, you might use commands to filter unwanted information, extract more information, evaluate new fields, calculate statistics, reorder your results, or create a chart. Some commands have functions and arguments associated with them. These functions and their arguments enable you to specify how the commands act on your results and which fields to act on; for example, how to create a chart, what kind of statistics to calculate, and what fields to evaluate. Some commands also enable you to use clauses to specify how you want to group your search results.</p>
 				</div>
 
-			<h3 class="accheader">Optimization Principles</h3>
+			<h3 class="accheader">Best Practices</h3>
 				<div>
 					<p class="description">
 					The key to fast searching is to limit the data that needs to be pulled from disk to an absolute minimum. Filter the data as early as possible in the search, so that processing is done on the minimum amount of data necessary.
@@ -107,7 +107,39 @@ styles in <div> tags, similar to Bootstrap's grid system.
 			<h3 class="accheader">Practice</h3>
 				<div>
 					<p class="description">
+					Try completing a search using the Search and Time Picker below. There are three dashboard panels that provide feedback on your search:
 					
+					<ul>
+						<li>Metrics on Your Search
+							<ul>
+								<li>Time Taken</li>
+									<ul>
+										<li>This field provides you with information about the duration time taken to complete the search. This filed will populate after the main search has completed.</li>
+									</ul>
+								<li>Result Count</li>
+									<ul>
+										<li>Total count of events returned from your search.</li>
+									</ul>
+								<li>Splunk Optimized Search Recomendation</li>
+									<ul>
+										<li>Splunk provides recommendations on how to optimize a search. All searches run with "| search", so if that is returned, you ran the search correctly. 
+										</li>
+											<ul>
+												<li>Example: 				index=main</li>
+												<li>Optimized Response: 	| search index=main</li>
+											</ul>
+									</ul>
+							</ul>
+						</li>
+						<li>Filter as soon as possible</li>
+							<ul>
+								<li>Use field-value pairs before the first pipe</li>
+								<li>Use filtering commands before calculating commands</li>
+								<li>Filter unnecessary fields from search results</li>
+								<li>Use non-streaming commands as late as possible</li>
+							</ul>
+						</li>
+					</ul>
 					
 					
 					</p>
