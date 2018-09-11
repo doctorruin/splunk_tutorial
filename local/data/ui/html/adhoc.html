@@ -132,8 +132,31 @@ styles in <div> tags, similar to Bootstrap's grid system.
 									</ul>
 							</ul>
 
-							</div>
 						</div>
+					<div class="dashboard-cell">
+						Events from Search
+						<div class="dashboard-panel">
+							<ul>
+								<li>Time</li>
+									<ul>
+										<li>Timestamp of the Event</li>
+									</ul>
+								<li>Result Count</li>
+									<ul>
+										<li>Total count of events returned from your search.</li>
+									</ul>
+								<li>Splunk Optimized Search Recomendation</li>
+									<ul>
+										<li>Splunk provides recommendations on how to optimize a search. All searches run with "| search", so if that is returned, you ran the search correctly. 
+										</li>
+											<ul>
+												<li>Example: 				index=main</li>
+												<li>Optimized Response: 	| search index=main</li>
+											</ul>
+									</ul>
+							</ul>
+						</div>
+					</div>
 					</p>
 				</div>
 		</div>
