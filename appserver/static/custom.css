@@ -6,6 +6,11 @@
 		#chart {
           height: 500px;
         }
+		#notes{
+		  font-size: 12px;
+		  border-top: 1px solid;
+		  padding-top: 2px;
+		}
 		
 		.accheader{
           background: #5cc05c;
@@ -35,7 +40,7 @@
     	  transition: margin .2s;
 		}
 		
-		.p{
+		p{
 		  border: 1px solid;
 		  border-radius: 10px;
 		  padding: 8px;
