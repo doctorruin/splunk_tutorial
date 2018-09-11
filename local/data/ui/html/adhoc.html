@@ -56,7 +56,7 @@ styles in <div> tags, similar to Bootstrap's grid system.
 				<div>
 					<p class="description">The "search pipeline" refers to the structure of a Splunk search, in which consecutive commands are chained together using a pipe character, "|". The pipe character tells Splunk software to use the output or result of one command (to the left of the pipe) as the input for the next command (to the right of the pipe). This enables you to refine or enhance the data at each step along the pipeline until you get the results that you want.</p>
 
-					<p class="description">A Splunk search starts with search terms at the beginning of the pipeline. These search terms are keywords, phrases, boolean expressions, key/value pairs, etc. that specify which events you want to retrieve from the index(es).</p>
+					<p class="description">A Splunk search starts with search terms at the beginning of the pipeline, this is called the <b>base search</b>. These search terms are keywords, phrases, boolean expressions, key/value pairs, etc. that specify which events you want to retrieve from the index(es).</p>
 
 					<p class="description">The retrieved events can then be passed as inputs into a search command using a pipe character. Search commands tell Splunk software what to do to the events after you retrieved them from the index(es). For example, you might use commands to filter unwanted information, extract more information, evaluate new fields, calculate statistics, reorder your results, or create a chart. Some commands have functions and arguments associated with them. These functions and their arguments enable you to specify how the commands act on your results and which fields to act on; for example, how to create a chart, what kind of statistics to calculate, and what fields to evaluate. Some commands also enable you to use clauses to specify how you want to group your search results.</p>
 				</div>
@@ -123,7 +123,7 @@ styles in <div> tags, similar to Bootstrap's grid system.
 										</ul>
 									<li>Splunk Optimized Search Recomendation</li>
 										<ul>
-											<li>Splunk provides recommendations on how to optimize a search. All searches run with "| search", so if that is returned, you ran the search correctly. 
+											<li>Splunk provides recommendations on how to optimize a search. All searches run, whether it is stated or not, with "| search" at the beginning of the search. If that is returned, you ran the search correctly. 
 											</li>
 												<ul>
 													<li>Example: 				index=main</li>
@@ -142,7 +142,7 @@ styles in <div> tags, similar to Bootstrap's grid system.
 								<ul>
 									<li>Time</li>
 										<ul>
-											<li>Timestamp of the Event</li>
+											<li>Timestamp of the event.</li>
 										</ul>
 									<li>Event</li>
 										<ul>
@@ -530,7 +530,7 @@ var search3 = new SearchManager({
         
         var input2 = new TimeRangeInput({
             "id": "input2",
-            "default": {"latest_time": "now", "earliest_time": "-24h@h"},
+            "default": {"latest_time": "now", "earliest_time": "-4h@h"},
             "searchWhenChanged": false,
             "earliest_time": "$form.time_token.earliest$",
             "latest_time": "$form.time_token.latest$",
