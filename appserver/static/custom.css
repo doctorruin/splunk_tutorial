@@ -40,7 +40,7 @@
     	  transition: margin .2s;
 		}
 		
-		p{
+		.pstyle{
 		  border: 1px solid;
 		  border-radius: 10px;
 		  padding: 8px;
