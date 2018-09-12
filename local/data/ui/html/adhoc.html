@@ -55,7 +55,7 @@ styles in <div> tags, similar to Bootstrap's grid system.
 			<h3 class="accheader">Introduction</h3>
 				<div class="dashboard-body-bg">
 				
-					<div class="description pstyle">A search consists of a series of commands that are delimited by pipe ( | ) characters. The first whitespace-delimited string after each pipe character controls the command used. The remainder of the text for each command is handled in a manner specific to the given command. For example, the below search commands are: search* , top, and fields.
+					<div class="description pstyle">A Splunk search consists of a series of commands that are delimited by pipe ( | ) characters. The first whitespace-delimited string after each pipe character controls the command used. The remainder of the text for each command is handled in a manner specific to the given command. For example, the below search commands are: search<sup>1</sup> , top, and fields.
 					
 					<div class="searchbox">
 					sourcetype=syslog ERROR | top user | fields - percent
@@ -79,7 +79,7 @@ styles in <div> tags, similar to Bootstrap's grid system.
 					</div>
 					
 					<div id="notes">
-					*The search command is implied at the beginning of any search. You do not need to specify the search command at the beginning of your search criteria.
+					<sup>1</sup>The search command is implied at the beginning of any search. You do not need to specify the search command at the beginning of your search criteria.
 					</div>
 					
 				</div>
